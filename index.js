@@ -23,6 +23,11 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
+app.get('/campground', async (req, res) => {
+    const camps = await Campground.find({});
+    res.render('campground/index', { camps });
+});
+
 app.listen(3000, () => {
     console.log('Serving on port 3000');
 });
