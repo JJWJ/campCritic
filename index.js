@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/camp-critic', {
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -35,7 +37,7 @@ app.get('/campground/new', (req, res) => {
 });
 
 app.post('/campground', async (req, res) => {
-    const {title, location} = req.body;
+    const {title, location} = req.body.campground;
     const newCampground = new Campground({
         title, location
     });
@@ -43,10 +45,23 @@ app.post('/campground', async (req, res) => {
     res.redirect(`/campground/${newCampground._id}`);
 });
 
+app.get('/campground/:id/edit', async (req, res) => {
+    const { id } = req.params;
+    const camp = await Campground.findById(id);
+    res.render('campground/edit', { camp });
+})
+
 app.get('/campground/:id', async (req, res) => {
     const { id } = req.params;
-    const camp = await Campground.findById(id)
+    const camp = await Campground.findById(id);
     res.render('campground/show', { camp });
+});
+
+app.put('/campground/:id', async (req, res) => {
+    const { id } = req.params
+    const { title, location } = req.body.campground;
+    const updatedCamp = await Campground.findByIdAndUpdate(id, {title, location});
+    res.redirect(`/campground/${updatedCamp._id}`);
 });
 
 app.listen(3000, () => {

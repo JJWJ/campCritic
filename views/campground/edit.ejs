@@ -4,24 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add A Campground</title>
+    <title>Edit A Campground</title>
 </head>
 
 <body>
-    <h1>Add a campground</h1>
-    <form action="/campground" method="post">
+    <h1>Edit a campground</h1>
+    <form action="/campground/<%= camp._id%>?_method=PUT" method="post">
         <div>
             <label for="title">Title</label>
-            <input type="text" name="campground[title]" id="title">
+            <input type="text" name="campground[title]" id="title" value="<%= camp.title%>">
         </div>
         <div>
             <label for="location">Location</label>
-            <input type="text" name="campground[location]" id="location">
+            <input type="text" name="campground[location]" id="location" value="<%= camp.location%>">
         </div>
         <div>
-            <button>Add Campground</button>
+            <button>Edit Campground</button>
         </div>
     </form>
+
+    <a href="/campground/<%= camp._id%>">Back to Campground</a>
     <footer>
         <a href="/campground">Back To All Campgrounds</a>
     </footer>
