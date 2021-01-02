@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const ejsEngine = require('ejs-mate');
 const Campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/camp-critic', {
@@ -20,6 +21,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.engine('ejs', ejsEngine);
+
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
@@ -29,11 +32,11 @@ app.get('/', (req, res) => {
 
 app.get('/campground', async (req, res) => {
     const camps = await Campground.find({});
-    res.render('campground/index', { camps });
+    res.render('campground/index', { camps, pageTitle: 'Campgrounds' });
 });
 
 app.get('/campground/new', (req, res) => {
-    res.render('campground/new');
+    res.render('campground/new', {pageTitle: 'Add A Campground'});
 });
 
 app.post('/campground', async (req, res) => {
@@ -48,13 +51,13 @@ app.post('/campground', async (req, res) => {
 app.get('/campground/:id/edit', async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findById(id);
-    res.render('campground/edit', { camp });
+    res.render('campground/edit', { camp, pageTitle: 'Edit A Campground' });
 })
 
 app.get('/campground/:id', async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findById(id);
-    res.render('campground/show', { camp });
+    res.render('campground/show', { camp, pageTitle: camp.title });
 });
 
 app.put('/campground/:id', async (req, res) => {
