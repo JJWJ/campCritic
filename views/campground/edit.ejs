@@ -2,26 +2,38 @@
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campground/<%= camp._id %>?_method=PUT" method="post">
+            <form action="/campground/<%= camp._id %>?_method=PUT" method="post" class="check-validation" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" name="campground[title]" id="title"
-                        value="<%= camp.title %>">
+                        value="<%= camp.title %>" required>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="location">Location</label>
                     <input class="form-control" type="text" name="campground[location]" id="location"
-                        value="<%= camp.location %>">
+                        value="<%= camp.location %>" required>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="image">Image Url</label>
                     <input class="form-control" type="text" name="campground[image]" id="image"
-                        value="<%= camp.image %>">
+                        value="<%= camp.image %>" required>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" type="text" name="campground[description]"
-                        id="description"><%= camp.description %></textarea>
+                    <textarea class="form-control" type="text" name="campground[description]" id="description"
+                        required><%= camp.description %></textarea>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
                 </div>
                 <div class="mb-3">
                 </div>
@@ -30,8 +42,11 @@
                     <div class="input-group">
                         <span class="input-group-text">$</span>
                         <input class="form-control" type="text" name="campground[price]" id="price"
-                            value="<%= camp.price %> ">
+                            value="<%= camp.price %>" required>
                         <span class="input-group-text">.00</span>
+                        <div class="valid-feedback">
+                            Looks good.
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">
