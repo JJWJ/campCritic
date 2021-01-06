@@ -3,7 +3,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsEngine = require('ejs-mate');
+const {campgroundSchema} = require('./validations');
 const wrapAsync = require('./helpers/warpAsync');
+const ExpressError = require('./helpers/ExpressError');
 const Campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/camp-critic', {
@@ -27,6 +29,16 @@ app.engine('ejs', ejsEngine);
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
+const validateCampground = (req, res, next) => {
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('home');
 });
@@ -40,7 +52,7 @@ app.get('/campground/new', (req, res) => {
     res.render('campground/new', {pageTitle: 'Add A Campground'});
 });
 
-app.post('/campground', wrapAsync(async (req, res) => {
+app.post('/campground', validateCampground, wrapAsync(async (req, res) => {
     const {title, location, price, image, description} = req.body.campground;
     const newCampground = new Campground({
         title, location, price, image, description 
@@ -61,7 +73,7 @@ app.get('/campground/:id', wrapAsync(async (req, res) => {
     res.render('campground/show', { camp, pageTitle: camp.title });
 }));
 
-app.put('/campground/:id', wrapAsync(async (req, res) => {
+app.put('/campground/:id', validateCampground, wrapAsync(async (req, res) => {
     const { id } = req.params
     const { title, location, description, price, image } = req.body.campground;
     const updatedCamp = await Campground.findByIdAndUpdate(id, { title, location, description, price, image });
@@ -74,8 +86,14 @@ app.delete('/campground/:id', wrapAsync(async (req, res) => {
     res.redirect('/campground');
 }));
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404));
+})
+
 app.use((err, req, res, next) => {
-    res.send('We found an error!');
+    const { statusCode = 500 } = err;
+    if(!err.message) err.message = 'We Found An Error';
+    res.status(statusCode).render('error', {err, pageTitle : statusCode.toString()});
 });
 
 app.listen(3000, () => {
