@@ -7,6 +7,7 @@ const {campgroundSchema} = require('./validations');
 const wrapAsync = require('./helpers/warpAsync');
 const ExpressError = require('./helpers/ExpressError');
 const Campground = require('./models/campground');
+const Review = require('./models/reviews');
 
 mongoose.connect('mongodb://localhost:27017/camp-critic', {
     useNewUrlParser: true,
@@ -84,6 +85,15 @@ app.delete('/campground/:id', wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect('/campground');
+}));
+
+app.post('/campground/:id/review', wrapAsync(async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campground/${campground._id}`);
 }));
 
 app.all('*', (req, res, next) => {
