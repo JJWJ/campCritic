@@ -97,6 +97,13 @@ app.delete('/campground/:id', wrapAsync(async (req, res) => {
     res.redirect('/campground');
 }));
 
+app.delete('/campground/:id/review/:reviewId', wrapAsync(async (req, res) => {
+    const { id, reviewId} = req.params;
+    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndRemove(reviewId);
+    res.redirect(`/campground/${id}`);
+}));
+
 app.post('/campground/:id/review', wrapAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id);
     const review = new Review(req.body.review);
