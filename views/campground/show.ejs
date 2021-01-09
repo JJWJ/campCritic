@@ -45,6 +45,18 @@
                 <button class="btn btn-success">Submit</button>
             </div>
         </form>
+        <div class="mb-3">
+            <% for(let review of camp.reviews) { %>
+                <div>
+                    <p>
+                        Rating: <%= review.rating %>
+                    </p>
+                    <p>
+                        Review: <%= review.body %>
+                    </p>
+                </div>
+                <% } %>
+        </div>
         <footer>
             <a href="/campground">Back To All Campgrounds</a>
         </footer>
