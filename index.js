@@ -12,7 +12,8 @@ const Review = require('./models/reviews');
 mongoose.connect('mongodb://localhost:27017/camp-critic', {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 const db = mongoose.connection;
@@ -93,7 +94,7 @@ app.put('/campground/:id', validateCampground, wrapAsync(async (req, res) => {
 
 app.delete('/campground/:id', wrapAsync(async (req, res) => {
     const { id } = req.params;
-    await Campground.findByIdAndDelete(id);
+    await Campground.findByIdAndRemove(id);
     res.redirect('/campground');
 }));
 
