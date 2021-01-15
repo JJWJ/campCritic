@@ -16,20 +16,22 @@ const validateReview = (req, res, next) => {
     }
 }
 
-router.delete('/:reviewId', wrapAsync(async (req, res) => {
-    const { id, reviewId} = req.params;
-    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-    await Review.findByIdAndRemove(reviewId);
-    res.redirect(`/campground/${id}`);
-}));
-
 router.post('/', wrapAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id);
     const review = new Review(req.body.review);
     campground.reviews.push(review);
     await review.save();
     await campground.save();
+    req.flash('success', 'Review successfully added!');
     res.redirect(`/campground/${campground._id}`);
+}));
+
+router.delete('/:reviewId', wrapAsync(async (req, res) => {
+    const { id, reviewId} = req.params;
+    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndRemove(reviewId);
+    req.flash('success', 'Review successfully deleted!');
+    res.redirect(`/campground/${id}`);
 }));
 
 module.exports = router;
