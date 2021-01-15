@@ -30,6 +30,7 @@ app.engine('ejs', ejsEngine);
 
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/campground', campgrounds);
