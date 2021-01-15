@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsEngine = require('ejs-mate');
+const session = require('express-session');
 const wrapAsync = require('./helpers/warpAsync');
 const ExpressError = require('./helpers/ExpressError');
 
@@ -32,6 +33,17 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const sessionConfig = {
+    secret: 'thisisnotaproductionsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+app.use(session(sessionConfig));
 
 app.use('/campground', campgrounds);
 app.use('/campground/:id/review', reviews);
