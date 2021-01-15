@@ -31,6 +31,7 @@ router.post('/', validateCampground, wrapAsync(async (req, res) => {
         title, location, price, image, description 
     });
     await newCampground.save();
+    req.flash('success', 'Campground successfully added!');
     res.redirect(`/campground/${newCampground._id}`);
 }));
 

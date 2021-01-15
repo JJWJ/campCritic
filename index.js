@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsEngine = require('ejs-mate');
 const session = require('express-session');
+const flash = require('connect-flash');
 const wrapAsync = require('./helpers/warpAsync');
 const ExpressError = require('./helpers/ExpressError');
 
@@ -44,6 +45,13 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 app.use('/campground', campgrounds);
 app.use('/campground/:id/review', reviews);
