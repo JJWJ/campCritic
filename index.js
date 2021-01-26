@@ -7,6 +7,9 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const wrapAsync = require('./helpers/warpAsync');
 const ExpressError = require('./helpers/ExpressError');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
@@ -52,6 +55,13 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 })
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use('/campground', campgrounds);
 app.use('/campground/:id/review', reviews);
