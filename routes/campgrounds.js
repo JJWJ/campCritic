@@ -4,6 +4,7 @@ const ExpressError = require('../helpers/ExpressError');
 const Campground = require('../models/campground');
 const wrapAsync = require('../helpers/warpAsync');
 const { campgroundSchema } = require('../validations');
+const isLoggedIn = require('../middleware');
 
 
 const validateCampground = (req, res, next) => {
@@ -21,11 +22,11 @@ router.get('/', wrapAsync(async (req, res) => {
     res.render('campground/index', { camps, pageTitle: 'Campgrounds' });
 }));
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('campground/new', {pageTitle: 'Add A Campground'});
 });
 
-router.post('/', validateCampground, wrapAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateCampground, wrapAsync(async (req, res) => {
     const {title, location, price, image, description} = req.body.campground;
     const newCampground = new Campground({
         title, location, price, image, description 
@@ -35,7 +36,7 @@ router.post('/', validateCampground, wrapAsync(async (req, res) => {
     res.redirect(`/campground/${newCampground._id}`);
 }));
 
-router.get('/:id/edit', wrapAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, wrapAsync(async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findById(id);
     if(!camp) {
@@ -55,7 +56,7 @@ router.get('/:id', wrapAsync(async (req, res) => {
     res.render('campground/show', { camp, pageTitle: camp.title });
 }));
 
-router.put('/:id', validateCampground, wrapAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validateCampground, wrapAsync(async (req, res) => {
     const { id } = req.params
     const { title, location, description, price, image } = req.body.campground;
     const updatedCamp = await Campground.findByIdAndUpdate(id, { title, location, description, price, image });
@@ -63,7 +64,7 @@ router.put('/:id', validateCampground, wrapAsync(async (req, res) => {
     res.redirect(`/campground/${updatedCamp._id}`);
 }));
 
-router.delete('/:id', wrapAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndRemove(id);
     res.redirect('/campground');
