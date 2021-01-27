@@ -1,7 +1,8 @@
 const isLoggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {
+        req.session.returnUrl = req.originalUrl;
         req.flash('error', 'You must be signed in first');
-        res.redirect('/login')
+        return res.redirect('/login')
     }
     next();
 }
