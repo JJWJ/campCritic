@@ -7,13 +7,16 @@ const User = require('../models/user');
 router.get('/register', (req, res) => {
     res.render('users/register', { pageTitle: 'Register'});
 });
-router.post('/register', wrapAsync(async (req, res) => {
+router.post('/register', wrapAsync(async (req, res, next) => {
 try { 
     const { username, email, password} = req.body.user;
     const newUser = await new User({username, email});
     const registeredUser = await User.register(newUser, password);
-    req.flash('success', 'Welcome to Camp Critic!');
-    res.redirect('/campground');
+    req.login(registeredUser, err => {
+        if(err) return next();
+        req.flash('success', 'Welcome to Camp Critic!');
+        res.redirect('/campground');
+    })
  } catch(e) {
      req.flash('error', e.message);
      res.redirect('/register');
