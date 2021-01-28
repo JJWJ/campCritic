@@ -58,7 +58,11 @@ router.get(
       req.flash('error', 'No campground found!');
       return res.redirect('/campground');
     }
-    res.render('campground/edit', { camp, pageTitle: 'Edit A Campground' });
+    if(! req.user._id || ! camp.author.equals(req.user._id)){
+      req.flash('error', 'Not Authorized');
+      return res.redirect(`/campground/${id}`);
+    }
+    return res.render('campground/edit', { camp, pageTitle: 'Edit A Campground' });
   }),
 );
 
@@ -83,6 +87,8 @@ router.put(
   validateCampground,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
+    const campground = await Campground.findById(id);
+    if(campground.author.equals(req.user._id)){
     const { title, location, description, price, image } = req.body.campground;
     const updatedCamp = await Campground.findByIdAndUpdate(id, {
       title,
@@ -92,7 +98,11 @@ router.put(
       image,
     });
     req.flash('success', 'Campground successfully updated!');
-    res.redirect(`/campground/${updatedCamp._id}`);
+    return res.redirect(`/campground/${updatedCamp._id}`);
+    } else {
+    req.flash('error', 'Not Authorized');
+    return res.redirect(`/campground/${id}`);
+    }
   }),
 );
 
@@ -101,8 +111,13 @@ router.delete(
   isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
+    const campground = Campground.findById(id);
+    if(!campground.author.equals(req.user._id)){
+      req.flash('error', 'Not Authorized')
+      return res.redirect(`/campground/${id}`)
+    }
     await Campground.findByIdAndRemove(id);
-    res.redirect('/campground');
+    return res.redirect('/campground');
   }),
 );
 
