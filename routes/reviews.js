@@ -3,12 +3,13 @@ const router = express.Router({ mergeParams: true });
 const Campground = require('../models/campground');
 const Review = require('../models/reviews');
 const wrapAsync = require('../helpers/warpAsync');
-const { validateReview } = require('../middleware');
+const { validateReview, isLoggedIn } = require('../middleware');
 
 
-router.post('/', validateReview, wrapAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateReview, wrapAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id);
     const review = new Review(req.body.review);
+    review.author = req.user._id;
     campground.reviews.push(review);
     await review.save();
     await campground.save();
@@ -16,7 +17,7 @@ router.post('/', validateReview, wrapAsync(async (req, res) => {
     res.redirect(`/campground/${campground._id}`);
 }));
 
-router.delete('/:reviewId', wrapAsync(async (req, res) => {
+router.delete('/:reviewId', isLoggedIn, wrapAsync(async (req, res) => {
     const { id, reviewId} = req.params;
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndRemove(reviewId);
