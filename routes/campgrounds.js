@@ -1,20 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const ExpressError = require('../helpers/ExpressError');
 const Campground = require('../models/campground');
 const wrapAsync = require('../helpers/warpAsync');
-const { campgroundSchema } = require('../validations');
-const isLoggedIn = require('../middleware');
+const { isLoggedIn, validateCampground, verifyAuthor } = require('../middleware');
 
-const validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(',');
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
 
 router.get(
   '/',
@@ -51,16 +40,13 @@ router.post(
 router.get(
   '/:id/edit',
   isLoggedIn,
+  verifyAuthor,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findById(id);
     if (!camp) {
       req.flash('error', 'No campground found!');
       return res.redirect('/campground');
-    }
-    if(! req.user._id || ! camp.author.equals(req.user._id)){
-      req.flash('error', 'Not Authorized');
-      return res.redirect(`/campground/${id}`);
     }
     return res.render('campground/edit', { camp, pageTitle: 'Edit A Campground' });
   }),
@@ -84,11 +70,10 @@ router.get(
 router.put(
   '/:id',
   isLoggedIn,
+  verifyAuthor,
   validateCampground,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id);
-    if(campground.author.equals(req.user._id)){
     const { title, location, description, price, image } = req.body.campground;
     const updatedCamp = await Campground.findByIdAndUpdate(id, {
       title,
@@ -99,23 +84,16 @@ router.put(
     });
     req.flash('success', 'Campground successfully updated!');
     return res.redirect(`/campground/${updatedCamp._id}`);
-    } else {
-    req.flash('error', 'Not Authorized');
-    return res.redirect(`/campground/${id}`);
     }
-  }),
+  ),
 );
 
 router.delete(
   '/:id',
   isLoggedIn,
+  verifyAuthor,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = Campground.findById(id);
-    if(!campground.author.equals(req.user._id)){
-      req.flash('error', 'Not Authorized')
-      return res.redirect(`/campground/${id}`)
-    }
     await Campground.findByIdAndRemove(id);
     return res.redirect('/campground');
   }),
