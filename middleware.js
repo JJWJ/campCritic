@@ -1,6 +1,7 @@
 const { campgroundSchema } = require('./validations');
 const ExpressError = require('./helpers/ExpressError');
 const Campground = require('./models/campground');
+const Review = require('./models/reviews');
 const { reviewSchema } = require('./validations');
 
 const isLoggedIn = (req, res, next) => {
@@ -32,6 +33,16 @@ const verifyAuthor = async (req, res, next) => {
   return next();
 };
 
+const verifyReviewAuthor = async (req, res, next) => {
+  const { id ,reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+  if(!review.author.equals(req.user._id)){
+    req.flash('error', 'Not Authorized')
+    return res.redirect(`/campground/${id}`)
+  }
+  return next();
+};
+
 const validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {
@@ -42,4 +53,4 @@ const validateReview = (req, res, next) => {
     }
 }
 
-module.exports = { isLoggedIn, validateCampground, verifyAuthor, validateReview };
+module.exports = { isLoggedIn, validateCampground, verifyAuthor, validateReview, verifyReviewAuthor };
