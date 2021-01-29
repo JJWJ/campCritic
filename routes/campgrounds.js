@@ -64,8 +64,6 @@ router.get(
         }
       })
       .populate('author');
-      console.log(camp.reviews);
-      console.log(req.user);
     if (!camp) {
       req.flash('error', 'No campground found!');
       return res.redirect('/campground');
