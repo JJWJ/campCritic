@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/stars.css">
     <div class="row">
         <div class="col-6">
             <div class="card mb-3" style=" object-fit: cover;">
@@ -44,7 +45,7 @@
                 <form action="/campground/<%= camp._id %>/review" method="POST" class="mb-3 check-validation"
                     novalidate>
                     <div class="mb-3">
-                        <label class="form-label" for="rating">Rating</label>
+                        <label class="form-label" for="rating">How would you rate this campground?</label>
                         <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
                     </div>
                     <div class="mb-3">
@@ -65,19 +66,21 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        Rating: <%= review.rating %>
+                                        <%= review.author.username %>
                                     </h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">
-                                        By <%= review.author.username %>
+                                    <h6 class="card-subtitle">
+                                        <p class="starability-result" data-rating=<%=review.rating %>>
+                                        </p>
+                                    </h6>
                                     </h6>
                                     <p class="card-text">
-                                        Review: <%= review.body %>
+                                        <%= review.body %>
                                     </p>
                                 </div>
                                 <% if(signedInUser && review.author._id.equals(signedInUser._id)) { %>
                                     <form action="/campground/<%= camp._id %>/review/<%= review._id %>?_method=DELETE"
                                         method="post">
-                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                        <button class="btn btn-sm btn-danger mx-3">Delete</button>
                                     </form>
                                     <% } %>
                             </div>
