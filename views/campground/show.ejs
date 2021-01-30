@@ -2,43 +2,56 @@
     <link rel="stylesheet" href="/stylesheets/stars.css">
     <div class="row">
         <div class="col-6">
-            <div class="card mb-3" style=" object-fit: cover;">
-                <% for(let img of camp.images) { %>
-
-                    <img src="<%= img.url %>" class="card-img-top" alt="campground in <%= camp.location %>">
-                    <% } %>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= camp.title %>
-                            </h5>
-                            <p class="card-text">
-                                <%= camp.description %>
-                            </p>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item text-muted">
-                                    <%= camp.location %>
-                                </li>
-                                <li class="list-group-item">
-                                    Submitted by - <%= camp.author.username %>
-                                </li>
-                                <li class="list-group-item ">
-                                    $ <%= camp.price %> Per Night
-                                </li>
-                            </ul>
-                            <% if(signedInUser && camp.author.equals(signedInUser)) { %>
-                                <div class="card-body">
-                                    <a href="/campground/<%= camp._id %>/edit"
-                                        class="card-link btn btn-secondary">Edit</a>
-                                    <form class="d-inline " action="/campground/<%= camp._id%>?_method=DELETE"
-                                        method="post">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </form>
-                                </div>
-                                <% } %>
-                                    <div class="card-footer text-muted">
-                                        2 days ago
-                                    </div>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% camp.images.forEach((img, i)=> { %>
+                        <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                            <img src="<%= img.url%>" class="d-block w-100" alt="">
                         </div>
+                        <% }) %>
+                </div>
+                <% if (camp.images.length> 1) { %>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                    <% } %>
+            </div>
+            <div class="card mb-3" style=" object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= camp.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= camp.description %>
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-muted">
+                            <%= camp.location %>
+                        </li>
+                        <li class="list-group-item">
+                            Submitted by - <%= camp.author.username %>
+                        </li>
+                        <li class="list-group-item ">
+                            $ <%= camp.price %> Per Night
+                        </li>
+                    </ul>
+                    <% if(signedInUser && camp.author.equals(signedInUser)) { %>
+                        <div class="card-body">
+                            <a href="/campground/<%= camp._id %>/edit" class="card-link btn btn-secondary">Edit</a>
+                            <form class="d-inline " action="/campground/<%= camp._id%>?_method=DELETE" method="post">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        <% } %>
+                            <div class="card-footer text-muted">
+                                2 days ago
+                            </div>
+                </div>
             </div>
             <footer>
                 <a href="/campground">Back To All Campgrounds</a>
