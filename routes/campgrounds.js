@@ -4,7 +4,8 @@ const campgrounds = require('../controllers/campgrounds');
 const wrapAsync = require('../helpers/warpAsync');
 const { isLoggedIn, validateCampground, verifyAuthor } = require('../middleware');
 const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const { storage } = require('../cloudinary/config');
+const upload = multer({ storage });
 
 router.route('/')
     .get( wrapAsync(campgrounds.index))
