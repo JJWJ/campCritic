@@ -1,4 +1,4 @@
-const { campgroundSchema } = require('./validations');
+const { preImageCampgroundSchema } = require('./validations');
 const ExpressError = require('./helpers/ExpressError');
 const Campground = require('./models/campground');
 const Review = require('./models/reviews');
@@ -13,8 +13,8 @@ const isLoggedIn = (req, res, next) => {
     return next();
 };
 
-const validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
+const preImageValidateCampground = (req, res, next) => {
+  const { error } = preImageCampgroundSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(',');
     throw new ExpressError(msg, 400);
@@ -22,6 +22,17 @@ const validateCampground = (req, res, next) => {
     return next();
   }
 };
+
+// const postImageValidateCampground = (req, res, next) => {
+//   console.log(req.body, 'Next UP', req.files);
+//   const { error } = postImageCampgroundSchema.validate(req.files); 
+//   if (error) {
+//     const msg = error.details.map((el) => el.message).join(',');
+//     throw new ExpressError(msg, 400);
+//   } else {
+//     return next();
+//   }
+// };
 
 const verifyAuthor = async (req, res, next) => {
   const { id } = req.params;
@@ -53,4 +64,13 @@ const validateReview = (req, res, next) => {
     }
 }
 
-module.exports = { isLoggedIn, validateCampground, verifyAuthor, validateReview, verifyReviewAuthor };
+// const debug = (req, res, next) => {
+//   console.log(req.body);
+//   console.log(req.files);
+//   console.log(res.req.files);
+//   console.log(req.header);
+//   console.log(req)
+//   return next();
+// }
+
+module.exports = { isLoggedIn, preImageValidateCampground, verifyAuthor, validateReview, verifyReviewAuthor };

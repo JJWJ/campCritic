@@ -2,7 +2,8 @@
     <div class="row">
         <h1 class="text-center">Add a campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campground" method="post" class="check-validation" enctype="multipart/form-data" novalidate>
+            <form action="/campground" method="post" class="check-validation" enctype="multipart/form-data"
+                name="newCampForm" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" name="campground[title]" id="title" required>
@@ -17,14 +18,6 @@
                         Looks good.
                     </div>
                 </div>
-                <input type="file" name="image" id="image" multiple>
-                <!-- <div class="mb-3">
-                    <label class="form-label" for="image">Image Url</label>
-                    <input class="form-control" type="text" name="campground[image]" id="image" required>
-                    <div class="valid-feedback">
-                        Looks good.
-                    </div>
-                </div> -->
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" type="text" name="campground[description]" id="description"
@@ -46,8 +39,9 @@
                         </div>
                     </div>
                 </div>
+                <input class="my-3" type="file" name="images" id="images" multiple>
                 <div class="mb-3">
-                    <button class="btn btn-success">Add Campground</button>
+                    <button class="btn btn-success" onsubmit="">Add Campground</button>
                 </div>
             </form>
             <footer>
@@ -55,3 +49,26 @@
             </footer>
         </div>
     </div>
+
+    <!-- <script>
+        const form = document.querySelector('[name=newCampForm]');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(document.querySelector('[name=newCampForm]'));
+            const newFormData = new FormData();
+            const xhr = new XMLHttpRequest();
+            const data = {};
+            for (let [key, value] of formData) {
+                data[key] = value;
+            };
+            newFormData.append('campground[title]', data['campground[title]']);
+            newFormData.append('campground[location]', data['campground[location]']);
+            newFormData.append('campground[description]', data['campground[description]']);
+            newFormData.append('campground[price]', data['campground[price]']);
+            newFormData.append('images', data['images']);
+            xhr.open('POST', '/campground', true);
+            xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+            xhr.send(newFormData);
+        });
+    </script> -->

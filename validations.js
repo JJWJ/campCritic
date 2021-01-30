@@ -1,14 +1,18 @@
 const Joi = require('joi');
 
-const campgroundSchema = Joi.object({
+const preImageCampgroundSchema = Joi.object({
     campground: Joi.object({
         title: Joi.string().required(),
         price: Joi.number().required().min(0),
-        image: Joi.string().required(),
         location: Joi.string().required(),
         description: Joi.string().required()
     }).required()
 });
+
+const postImageCampgroundSchema = Joi.array().items(Joi.object({
+            url: String,
+            filename: String
+        })).required();
 
 const reviewSchema = Joi.object({
     review: Joi.object({
@@ -18,4 +22,4 @@ const reviewSchema = Joi.object({
 })
 
 
-module.exports = { campgroundSchema, reviewSchema };
+module.exports = { preImageCampgroundSchema,  postImageCampgroundSchema, reviewSchema };
