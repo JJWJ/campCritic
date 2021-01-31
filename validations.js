@@ -6,7 +6,8 @@ const preImageCampgroundSchema = Joi.object({
         price: Joi.number().required().min(0),
         location: Joi.string().required(),
         description: Joi.string().required()
-    }).required()
+    }).required(),
+    deleteImages: Joi.array()
 });
 
 const postImageCampgroundSchema = Joi.array().items(Joi.object({
