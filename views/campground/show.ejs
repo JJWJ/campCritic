@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-6">
-            <div id='map'></div>
+            <div class="my-2" id='map'></div>
             <div id="campgroundCarouselControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <% camp.images.forEach((img, i)=> { %>
@@ -45,10 +45,12 @@
                         </li>
                     </ul>
                     <% if(signedInUser && camp.author.equals(signedInUser)) { %>
-                        <div class="card-body">
+                        <div class="card-body d-grid ">
                             <a href="/campground/<%= camp._id %>/edit" class="card-link btn btn-secondary">Edit</a>
                             <form class="d-inline " action="/campground/<%= camp._id%>?_method=DELETE" method="post">
-                                <button class="btn btn-danger">Delete</button>
+                                <div class="d-grid">
+                                    <button class="btn btn-danger my-1">Delete</button>
+                                </div>
                             </form>
                         </div>
                         <% } %>
@@ -63,7 +65,7 @@
         </div>
         <div class="col-6">
             <% if(signedInUser) { %>
-                <h2>Leave a Review</h2>
+                <h2><%= `Tell us about ${camp.title}`  %> </h2>
                 <form action="/campground/<%= camp._id %>/review" method="POST" class="mb-3 check-validation"
                     novalidate>
                     <fieldset class="starability-basic">
@@ -86,7 +88,7 @@
                             Looks good.
                         </div>
                     </div>
-                    <div>
+                    <div class="d-grid">
                         <button class="btn btn-success">Submit</button>
                     </div>
                 </form>
@@ -110,7 +112,9 @@
                                 <% if(signedInUser && review.author._id.equals(signedInUser._id)) { %>
                                     <form action="/campground/<%= camp._id %>/review/<%= review._id %>?_method=DELETE"
                                         method="post">
-                                        <button class="btn btn-sm btn-danger mx-3">Delete</button>
+                                        <div class="d-grid">
+                                            <button class="btn btn-sm btn-danger mx-3">Delete</button>
+                                        </div>
                                     </form>
                                     <% } %>
                             </div>

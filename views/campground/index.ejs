@@ -1,14 +1,14 @@
 <% layout('layouts/boilerplate.ejs') %>
-    <div id="cluster-map" ></div>
-    <h1>All Campgrounds</h1>
+    <div id="cluster-map"></div>
+    <h1 class="text-center">All Campgrounds</h1>
     <% for (let camp of camps) { %>
-        <div class="card mb-3" style="object-fit: cover;">
+        <div class="card mb-3 bg-light" style="object-fit: cover;">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 ">
                     <img class="card-img-top" src="<%= camp.images[0].url %>" alt="campground <%= camp.title %>"
                         srcset="">
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title text-center">
                             <%= camp.title %>
                         </h5>
                         <p class="card-text">
@@ -19,7 +19,9 @@
                                 <%= camp.location %>
                             </small>
                         </p>
-                        <a href="/campground/<%= camp._id %>" class="btn btn-primary">View <%= camp.title %> </a>
+                        <div class="d-grid">
+                            <a href="/campground/<%= camp._id %>" class="btn btn-primary">View <%= camp.title %> </a>
+                        </div>
                     </div>
                 </div>
             </div>
