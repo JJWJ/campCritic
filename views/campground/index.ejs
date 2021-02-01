@@ -29,7 +29,7 @@
         <% } %>
 
             <script>
-                const mapBoxToken = '<%-process.env.MAPBOX_TOKEN%>';
+                const mapBoxToken = '<%- process.env.MAPBOX_TOKEN%>';
                 const campgrounds = { features: <%-JSON.stringify(camps) %>}
             </script>
 
