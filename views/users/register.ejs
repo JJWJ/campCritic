@@ -1,28 +1,41 @@
 <% layout('layouts/boilerplate.ejs') %>
-    <h1>Register</h1>
-    <form action="/register" method="POST" class="check-validation" novalidate>
-        <div class="mb3">
-            <label for="username" class="form-label">Enter Username</label>
-            <input type="text" class="form-control" name="user[username]" id="username" required>
-            <div class="valid-feedback">
-                Looks good.
+    <div class="container d-flex justify-content-center align-items-center my-5">
+        <div class="row">
+            <div class="col-md-6 w-100 offset-md-3">
+                <div class="card ">
+                    <img src="images/sambit-mahapatra-SnQs8Kozt6c-unsplash-200x-200y.jpg" alt="A campfire at night"
+                        class="card-img-top " />
+                    <div class="card-body">
+                        <h5 class="card-title">Register</h5>
+                        <form action="/register" method="POST" class="check-validation" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Username</label>
+                                <input class="form-control" type="text" id="username" name="user[username]" autofocus
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input class="form-control" type="password" id="password" name="user[password]"
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" id="email" name="user[email]" autofocus
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-block">Register</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="mb3">
-            <label for="password" class="form-label">Enter Password</label>
-            <input type="password" class="form-control" name="user[password]" id="password" required>
-            <div class="valid-feedback">
-                Looks good.
-            </div>
-        </div>
-        <div class="mb3">
-            <label for="email" class="form-label">Enter Email</label>
-            <input type="email" class="form-control" name="user[email]" id="email" required>
-            <div class="valid-feedback">
-                Looks good.
-            </div>
-        </div>
-        <div class="mb-3">
-            <button class="btn btn-success">Register</button>
-        </div>
-    </form>
+    </div>

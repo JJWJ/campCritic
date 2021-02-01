@@ -4,7 +4,7 @@ const passport = require('passport');
 const wrapAsync = require('../helpers/warpAsync');
 const users = require('../controllers/users');
 
-router.route('/')
+router.route('/register')
     .get( users.renderRegistrationForm)
     .post( wrapAsync(users.createUser));
 
