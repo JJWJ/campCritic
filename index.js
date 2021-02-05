@@ -44,6 +44,7 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sessionConfig = {
+  name: 'browserSession',
   secret: 'thisisnotaproductionsecret',
   resave: false,
   saveUninitialized: true,
