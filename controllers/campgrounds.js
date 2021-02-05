@@ -6,8 +6,27 @@ const cloudinary = require('cloudinary').v2;
 
 
 module.exports.index = async (req, res) => {
-    const camps = await Campground.find({});
-    res.render('campground/index', { camps, pageTitle: 'Campgrounds' });
+  let { page = 1 } = req.query;
+  if (page < 1) page = 1;
+  const limit = 30;
+  let start = (page - 1) * limit;
+  let end = page * limit;
+  let last = false;
+  const camps = await Campground.find({});
+  const endOfCamps = camps.length;
+  if (start > endOfCamps) {
+    req.flash('error', 'No page found');
+    const redirectUrl = req.session.returnUrl  || '/campground'
+    return res.redirect(redirectUrl);
+  };
+  if( end >= endOfCamps - 1){
+    last = true;
+    end = endOfCamps - 1;
+  };
+  // if (page * limit >= endOfCamps) last = true;
+  const campsToRender = camps.slice(start, end)
+
+  res.render('campground/index', { camps, campsToRender, last, page,  pageTitle: 'Campgrounds' });
 }
 
 module.exports.renderNewForm = (req, res) => {
