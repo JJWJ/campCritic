@@ -14,6 +14,8 @@ const ExpressError = require('./helpers/ExpressError');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const { scriptSrcUrls, styleSrcUrls, connectSrcUrls, fontSrcUrls} = require('./helmetConfig');
 const User = require('./models/user');
 
 const userRoutes = require('./routes/users');
@@ -57,6 +59,28 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 app.use(mongoSanitize());
+app.use(helmet());
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            childSrc: ["blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/dwaenqgi7/", 
+                "https://images.unsplash.com",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
