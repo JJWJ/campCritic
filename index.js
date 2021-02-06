@@ -9,7 +9,6 @@ const methodOverride = require('method-override');
 const ejsEngine = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
-const wrapAsync = require('./helpers/warpAsync');
 const ExpressError = require('./helpers/ExpressError');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
