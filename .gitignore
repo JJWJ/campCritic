@@ -105,3 +105,6 @@ dist
 
 # Image Test files
 uploads/
+
+# Todos for project
+todo.md
