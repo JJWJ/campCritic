@@ -3,13 +3,17 @@
 CampCritic is a categoric clone of Yelp. It is a demo project to demonstrate
 my the use of the technologies in the technologies section.
 
-# ScreenShots
+## ScreenShots
 
-# Technologies and Patterns
 
+### Patterns
 * MVC
 
-* Ejs
+* Templating 
+    * Ejs
+---
+
+### Technologies
 
 * NodeJs
 
@@ -29,10 +33,10 @@ my the use of the technologies in the technologies section.
 
 * Passport/Passport Local
 
-# Install Instructions
+### Install Instructions
 
-# App Structure
+### App Structure
 
-# Caveats
+### Caveats
 
-# Working Example on Heroku (May take a few Seconds to boot initially)
+### Working Example on Heroku (May take a few Seconds to boot initially)
