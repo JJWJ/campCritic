@@ -4,8 +4,7 @@ const cities = require('./cities');
 const Details = require('./details');
 const { places, descriptors } = require('./seedHelpers');
 const dbUrl = process.env.DB_URL;
-const localDBUrl = 'mongodb://localhost:27017/camp-critic';
-const connectUrl = dbUrl || localDBUrl;
+const connectUrl = dbUrl;
 const seedUser = process.env.SEED_USER;
 
 mongoose.connect(connectUrl, {
