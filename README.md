@@ -1,7 +1,7 @@
 # CampCritic
 
 CampCritic is a categoric clone of Yelp. It is a demo project to demonstrate
-my the use of the technologies in the technologies section.
+my the use of the patterns, technologies, and services bellow.
 
 ### ScreenShots
 ##### Homepage
@@ -32,13 +32,17 @@ my the use of the technologies in the technologies section.
 
 * Bootstrap V5
 
+* JOI
+
+* Passport/Passport Local
+
+### Services
+
 * MapBox 
 
 * Cloudinary
 
-* JOI
-
-* Passport/Passport Local
+* Mongo Atlas
 ---
 
 ### Caveats
