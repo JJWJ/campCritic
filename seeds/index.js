@@ -6,6 +6,7 @@ const { places, descriptors } = require('./seedHelpers');
 const dbUrl = process.env.DB_URL;
 const localDBUrl = 'mongodb://localhost:27017/camp-critic';
 const connectUrl = dbUrl || localDBUrl;
+const seedUser = process.env.SEED_USER;
 
 mongoose.connect(connectUrl, {
 	useNewUrlParser: true,
@@ -23,7 +24,7 @@ const seedName = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const seedDB = async () => {
 	await Campground.deleteMany({});
-	for (let i = 0; i < 250; i++) {
+	for (let i = 0; i < 30; i++) {
 		const randomNum = Math.floor(Math.random() * 1000);
 		const randomPrice = Math.floor(Math.random() * 151);
 		const detailNumber = Math.floor(Math.random() * 101);
@@ -33,7 +34,7 @@ const seedDB = async () => {
 			`${cities[randomNum].city}, ${cities[randomNum].state}`,
 		);
 		const camp = new Campground({
-			author: '601232f929735e0b578b62d1',
+			author: seedUser,
 			location: `${cities[randomNum].city}, ${cities[randomNum].state}`,
 			geometry: {
 				type: 'Point',
