@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsEngine = require('ejs-mate');
 const session = require('express-session');
+const MongoStore = require('connect-mongo').default;
 const flash = require('connect-flash');
 const ExpressError = require('./helpers/ExpressError');
 const passport = require('passport');
@@ -52,15 +53,13 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sessionConfig = {
-	name: 'browserSession',
 	secret: 'thisisnotaproductionsecret',
 	resave: false,
-	saveUninitialized: true,
-	cookie: {
-		httpOnly: true,
-		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-		maxAge: 1000 * 60 * 60 * 24 * 7,
-	},
+	saveUninitialized: false,
+	store: MongoStore.create({
+		mongoUrl: localDBUrl,
+		touchAfter: 24 * 3600,
+	}),
 };
 app.use(session(sessionConfig));
 app.use(flash());
