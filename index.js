@@ -30,6 +30,7 @@ const dbUrl = process.env.DB_URL;
 const localDBUrl = 'mongodb://localhost:27017/camp-critic';
 const connectUrl = dbUrl || localDBUrl;
 const secret = process.env.SECRET || 'thisisnotaproductionsecret';
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(connectUrl, {
 	useNewUrlParser: true,
@@ -123,6 +124,6 @@ app.use((err, req, res, next) => {
 		.render('error', { err, pageTitle: statusCode.toString() });
 });
 
-app.listen(3000, () => {
-	console.log('Serving on port 3000');
+app.listen(PORT, () => {
+	console.log(`Serving on port ${PORT}`);
 });
