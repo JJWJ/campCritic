@@ -1,12 +1,13 @@
 <% layout('layouts/boilerplate.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/cardImage.css">
     <div id="cluster-map"></div>
     <h1 class="text-center">All Campgrounds</h1>
     <% for (let camp of campsToRender) { %>
-        <div class="card mb-3 bg-dark shadow p-3 text-white" style="object-fit: cover;">
+        <div class="card mb-3 bg-dark shadow text-white" style="object-fit: cover;">
             <div class="row ">
                 <div class="col-md-4">
-                    <img class="card-img-top mt-4" src="<%= camp.images[0].url %>" alt="campground <%= camp.title %>"
-                        srcset="">
+                    <img class="card-img-top mt-3 ms-3" src="<%= camp.images[0].url %>"
+                        alt="campground <%= camp.title %>" srcset="">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -34,14 +35,25 @@
                 <ul class="pagination">
                     <li class="page-item <% if (parseInt(page) - 1 <= 0) { %>
                     disabled 
-                    <% } %>"><a class="page-link" href="/campground?page=<%= parseInt(page) - 1 %>">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="/campground?page=<%= parseInt(page) %>">
+                    <% } %>"><a class="page-link" aria-label="Previous" arial-disabled="<% if (parseInt(page) - 1 <= 0) { %>
+                    true 
+                    <% } %>" href="/campground?page=<%= parseInt(page) - 1 %>">Previous</a></li>
+                    <li class="page-item
+                        <% if (parseInt(page) - 1 <=0) { %>
+                            visually-hidden
+                            <% } %>"> <a class="page-link" arial-disabled="<% if (parseInt(page) - 1 <= 0) { %>
+                    true 
+                    <% } %>" href="/campground?page=<%= parseInt(page) - 1 %>">
+                            <%= parseInt(page) - 1 %>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link active" href="/campground?page=<%= parseInt(page) %>">
                             <%= parseInt(page) %>
                         </a></li>
                     <li class="page-item <% if (last) { %>
                     disabled 
-                    <% } %>"><a class="page-link"
-                            href="/campground?page=<%= Math.floor(parseInt(page, 10) + 1) %>">Next</a></li>
+                    <% } %>"><a class="page-link" href="/campground?page=<%= Math.floor(parseInt(page, 10) + 1) %>"
+                            aria-label="Next">Next</a></li>
                 </ul>
             </nav>
             <script>

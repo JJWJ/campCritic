@@ -1,5 +1,6 @@
 <% layout('layouts/boilerplate.ejs') %>
     <link rel="stylesheet" href="/stylesheets/stars.css">
+    <link rel="stylesheet" href="/stylesheets/carousel.css">
 
     <div class="row">
         <div class="col-6">
@@ -65,7 +66,9 @@
         </div>
         <div class="col-6">
             <% if(signedInUser) { %>
-                <h2><%= `Tell us about ${camp.title}`  %> </h2>
+                <h2>
+                    <%= `Tell us about ${camp.title}` %>
+                </h2>
                 <form action="/campground/<%= camp._id %>/review" method="POST" class="mb-3 check-validation"
                     novalidate>
                     <fieldset class="starability-basic">
