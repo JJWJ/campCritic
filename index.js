@@ -28,8 +28,10 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const dbUrl = process.env.DB_URL;
 const localDBUrl = 'mongodb://localhost:27017/camp-critic';
+const connectUrl = dbUrl || localDBUrl;
+const secret = process.env.SECRET || 'thisisnotaproductionsecret';
 
-mongoose.connect(localDBUrl, {
+mongoose.connect(connectUrl, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true,
@@ -53,11 +55,11 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sessionConfig = {
-	secret: 'thisisnotaproductionsecret',
+	secret: secret,
 	resave: false,
 	saveUninitialized: false,
 	store: MongoStore.create({
-		mongoUrl: localDBUrl,
+		mongoUrl: connectUrl,
 		touchAfter: 24 * 3600,
 	}),
 };

@@ -3,8 +3,11 @@ const Campground = require('../models/campground');
 const cities = require('./cities');
 const Details = require('./details');
 const { places, descriptors } = require('./seedHelpers');
+const dbUrl = process.env.DB_URL;
+const localDBUrl = 'mongodb://localhost:27017/camp-critic';
+const connectUrl = dbUrl || localDBUrl;
 
-mongoose.connect('mongodb://localhost:27017/camp-critic', {
+mongoose.connect(connectUrl, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true,
