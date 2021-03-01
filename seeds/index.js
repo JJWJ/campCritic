@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 const Campground = require('../models/campground');
 const cities = require('./cities');
 const Details = require('./details');
 const { places, descriptors } = require('./seedHelpers');
 const dbUrl = process.env.DB_URL;
-const connectUrl = dbUrl;
 const seedUser = process.env.SEED_USER;
 
-mongoose.connect(connectUrl, {
+console.log(dbUrl);
+console.log(seedUser);
+mongoose.connect(dbUrl, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true,
