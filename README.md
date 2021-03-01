@@ -3,6 +3,8 @@
 CampCritic is a categoric clone of Yelp. It is a demo project to demonstrate
 my the use of the patterns, technologies, and services bellow.
 
+---
+
 ### ScreenShots
 ##### Homepage
 ![List of campgrounds](https://res.cloudinary.com/dwaenqgi7/image/upload/c_scale,w_943/v1614568022/CampCritic/Screenshots/HomePage_tth7m3.jpg)
@@ -35,6 +37,7 @@ my the use of the patterns, technologies, and services bellow.
 * JOI
 
 * Passport/Passport Local
+---
 
 ### Services
 
