@@ -1,6 +1,6 @@
 # CampCritic
 
-CampCritic is a categoric clone of Yelp. It is a demo project to demonstrate
+CampCritic is a categoric clone of Yelp. It is a technology showcase to demonstrate
 my the use of the patterns, technologies, and services bellow.
 
 ---
