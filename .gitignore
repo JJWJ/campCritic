@@ -108,3 +108,8 @@ uploads/
 
 # Todos for project
 todo.md
+
+# Cypress Assets
+cypress/downloads
+cypress/videos
+cypress/screenshots

@@ -6,34 +6,35 @@
                     <img src="images/sambit-mahapatra-SnQs8Kozt6c-unsplash-200x-200y.jpg" alt="A campfire at night"
                         class="card-img-top " />
                     <div class="card-body">
-                        <h5 class="card-title text-center">Register</h5>
+                        <p class="card-title text-center" style="font-size: 18px;">Register</p>
                         <form action="/register" method="POST" class="check-validation" novalidate>
                             <div class="mb-3">
                                 <label class="form-label" for="username">Username</label>
-                                <input class="form-control" type="text" id="username" name="user[username]"
-                                    placeholder="Username" autofocus required>
+                                <input aria-label="Username Input" class="form-control" type="text" id="username"
+                                    name="user[username]" placeholder="Username" autofocus required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="password">Password</label>
-                                <input class="form-control" type="password" id="password" name="user[password]"
-                                    placeholder="Password" required>
+                                <input aria-label="Password Input" class="form-control" type="password" id="password"
+                                    name="user[password]" placeholder="Password" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="email">Email</label>
-                                <input class="form-control" type="email" id="email" name="user[email]"
-                                    placeholder="name@example.com" autofocus required>
+                                <input aria-label="Email Input" class="form-control" type="email" id="email"
+                                    name="user[email]" placeholder="name@example.com" autofocus required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="d-grid gap-2">
-                                <button class="btn btn-success btn-block">Register</button>
+                                <button aria-label="Register Button" class="btn btn-success btn-block"
+                                    name="registerBtn">Register</button>
                             </div>
                         </form>
                     </div>

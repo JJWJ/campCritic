@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Campground = require('../models/campground');
+const User = require('../models/user');
 const cities = require('./cities');
 const Details = require('./details');
 const { places, descriptors } = require('./seedHelpers');
@@ -52,6 +53,12 @@ const seedDB = async () => {
 		await camp.save();
 	}
 };
+
+const deleteTestAccount = async () => {
+	await User.findOneAndDelete({ email: 'cypressTest@Test.com' });
+};
+
+deleteTestAccount();
 
 seedDB().then(() => {
 	mongoose.connection.close();
