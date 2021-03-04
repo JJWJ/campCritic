@@ -22,3 +22,17 @@ describe('The Register User Story', () => {
 		cy.url().should('include', '/campground');
 	});
 });
+
+describe('The Login User Story', () => {
+	beforeEach(() => {
+		cy.exec('node seeds/index.js');
+		cy.login('cypressTest', 'password', 'cypressTest@Test.com');
+		Cypress.Cookies.preserveOnce('session');
+	});
+
+	it('Logs out', () => {
+		cy.visit('http://localhost:3000/campground');
+		cy.contains('Logout').click();
+		cy.contains('Login').should('be.visible');
+	});
+});
