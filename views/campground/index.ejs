@@ -6,7 +6,7 @@
         <div class="card mb-3 bg-dark shadow text-white" style="object-fit: cover;">
             <div class="row ">
                 <div class="col-md-4">
-                    <img class="card-img-top mt-3 ms-3" src="<%= camp.images[0].url %>"
+                    <img class="card-img-top mt-3 " src="<%= camp.images[0].url %>"
                         alt="campground <%= camp.title %>" srcset="">
                 </div>
                 <div class="col-md-8">
@@ -23,7 +23,7 @@
                             </small>
                         </p>
                         <div class="d-grid">
-                            <a href="/campground/<%= camp._id %>" class="btn btn-primary">View <%= camp.title %>
+                            <a href="/campground/<%= camp._id %>" class="btn btn-primary" data-test-id="button">View <%= camp.title %>
                             </a>
                         </div>
                     </div>
