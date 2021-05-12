@@ -7,11 +7,15 @@ my the use of the patterns, technologies, and services bellow.
 
 ### ScreenShots
 ##### Homepage
-![List of campgrounds](https://res.cloudinary.com/dwaenqgi7/image/upload/c_scale,w_943/v1614568022/CampCritic/Screenshots/HomePage_tth7m3.jpg)
+![CampCritic Homepage](./screenshots/Home.png)
 ##### View all
-![List of campgrounds](https://res.cloudinary.com/dwaenqgi7/image/upload/c_scale,w_943/v1614568022/CampCritic/Screenshots/ViewAll_naf9m0.jpg)
-##### Logged in campground owner 
-![List of campgrounds](https://res.cloudinary.com/dwaenqgi7/image/upload/c_scale,w_943/v1614568021/CampCritic/Screenshots/LoggedInCampgroundOwner_fqluug.jpg)
+![List of campgrounds](./screenshots/View_All.png)
+##### Register a new account
+![Register new account](./screenshots/Register.png)
+##### Add a campground
+![Add a campground](./screenshots/Add_Campground.png)
+##### Add a review
+![Add a review](./screenshots/Review.png)
 
 ---
 
