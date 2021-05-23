@@ -52,6 +52,6 @@ my the use of the patterns, technologies, and services bellow.
 * Mongo Atlas
 ---
 
-### Working Example on Heroku (May take a few Seconds to boot initially)
+### Working Example
 
-[CampCritic](https://frozen-plains-12452.herokuapp.com/home)
+[CampCritic](https://z-campcritic.hellojjwj.com/home)
