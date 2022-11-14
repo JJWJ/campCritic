@@ -50,8 +50,4 @@ my the use of the patterns, technologies, and services bellow.
 * Cloudinary
 
 * Mongo Atlas
----
 
-### Working Example
-
-[CampCritic](https://z-campcritic.hellojjwj.com/home)
